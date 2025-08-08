@@ -1,0 +1,126 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqlthqy30gb5l"]
+
+[ext_resource type="Script" uid="uid://xakxyv1r778s" path="res://scripts/mod_container.gd" id="2_0uvuq"]
+[ext_resource type="Texture2D" uid="uid://8e2e5qomsykk" path="res://icon.svg" id="2_kj2ww"]
+[ext_resource type="Script" uid="uid://bnvn437x18vg7" path="res://scripts/scenes/app.gd" id="2_wojlp"]
+[ext_resource type="Script" uid="uid://ca2r0vf2xtwbl" path="res://scenes/resize_container.gd" id="3_wojlp"]
+
+[node name="App" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("2_wojlp")
+metadata/_edit_lock_ = true
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 2
+offset_top = 31.0
+offset_right = 1152.0
+offset_bottom = 648.0
+split_offset = 325
+script = ExtResource("3_wojlp")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Mods" type="Tree" parent="HSplitContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+hide_root = true
+
+[node name="ModInfo" type="PanelContainer" parent="HSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_0uvuq")
+text_distance = 10.0
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+metadata/_custom_type_script = "uid://xakxyv1r778s"
+
+[node name="ModPreview" type="TextureRect" parent="HSplitContainer/ModInfo"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("2_kj2ww")
+
+[node name="ModName" type="Label" parent="HSplitContainer/ModInfo"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.0
+theme_override_font_sizes/font_size = 32
+text = "Invalid mod"
+
+[node name="ModDescription" type="Label" parent="HSplitContainer/ModInfo"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Invalid description"
+autowrap_mode = 1
+
+[node name="Buttons" type="HBoxContainer" parent="HSplitContainer/ModInfo"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="Apply" type="Button" parent="HSplitContainer/ModInfo/Buttons"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Apply Mod"
+
+[node name="Remove" type="Button" parent="HSplitContainer/ModInfo/Buttons"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Remove Mod"
+
+[node name="MenuBar" type="MenuBar" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 31.0
+
+[node name="File" type="MenuButton" parent="MenuBar"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 75.0
+offset_bottom = 31.0
+text = "File"
+item_count = 3
+popup/item_0/text = "New Mod"
+popup/item_0/id = 0
+popup/item_1/text = "Import Mod"
+popup/item_1/id = 1
+popup/item_2/text = "Export Mod"
+popup/item_2/id = 2
+
+[node name="Edit" type="MenuButton" parent="MenuBar"]
+layout_mode = 0
+offset_left = 88.0
+offset_right = 155.0
+offset_bottom = 31.0
+text = "Edit"
+item_count = 5
+popup/item_0/text = "Change Mod Name"
+popup/item_0/id = 0
+popup/item_1/text = "Change Description"
+popup/item_1/id = 1
+popup/item_2/text = "Change Mod Music Wad"
+popup/item_2/id = 2
+popup/item_3/id = 4
+popup/item_3/separator = true
+popup/item_4/text = "Change settings"
+popup/item_4/id = 3
+
+[connection signal="item_selected" from="HSplitContainer/ScrollContainer/Mods" to="." method="_on_mods_item_selected"]

@@ -1,0 +1,35 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="HLM2 Mod manager"
+run/main_scene="uid://dqlthqy30gb5l"
+config/features=PackedStringArray("4.4", "GL Compatibility")
+config/icon="res://icon.svg"
+
+[autoload]
+
+Scene="*res://addons/game_utils/utils/scene.gd"
+ModManager="*res://scripts/mod_manager.gd"
+
+[dotnet]
+
+project/assembly_name="HTM2 Mod manager"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/game_utils/plugin.cfg")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.180392, 0.172549, 0.211765, 1)
