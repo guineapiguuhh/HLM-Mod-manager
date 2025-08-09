@@ -1,15 +1,34 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqlthqy30gb5l"]
+[gd_scene load_steps=6 format=3 uid="uid://dqlthqy30gb5l"]
 
-[ext_resource type="Script" uid="uid://xakxyv1r778s" path="res://scripts/mod_container.gd" id="2_0uvuq"]
-[ext_resource type="Texture2D" uid="uid://8e2e5qomsykk" path="res://icon.svg" id="2_kj2ww"]
-[ext_resource type="Script" uid="uid://bnvn437x18vg7" path="res://scripts/scenes/app.gd" id="2_wojlp"]
-[ext_resource type="Script" uid="uid://ca2r0vf2xtwbl" path="res://scenes/resize_container.gd" id="3_wojlp"]
+[ext_resource type="Script" uid="uid://bnvn437x18vg7" path="res://scripts/scenes/app.gd" id="1_awiwq"]
+[ext_resource type="Script" uid="uid://ca2r0vf2xtwbl" path="res://scripts/resize_container.gd" id="2_k6d74"]
+[ext_resource type="Script" uid="uid://xakxyv1r778s" path="res://scripts/mod_container.gd" id="3_ljqyw"]
+[ext_resource type="Texture2D" uid="uid://8e2e5qomsykk" path="res://icon.svg" id="4_jv7dx"]
+[ext_resource type="Script" uid="uid://dpd2swr8axe5n" path="res://scripts/menu_bar.gd" id="5_6qkjt"]
 
 [node name="App" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("2_wojlp")
+script = ExtResource("1_awiwq")
 metadata/_edit_lock_ = true
+
+[node name="PathDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Open a Directory"
+initial_position = 1
+popup_window = true
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+
+[node name="ErrorPopup" type="AcceptDialog" parent="."]
+unique_name_in_owner = true
+title = "Error!"
+initial_position = 1
+size = Vector2i(393, 106)
+popup_window = true
+dialog_text = "You have not set the path for Hotline Miami 2!
+Go to Edit > Change Hotline Miami 2 Path"
 
 [node name="HSplitContainer" type="HSplitContainer" parent="."]
 layout_mode = 2
@@ -17,7 +36,7 @@ offset_top = 31.0
 offset_right = 1152.0
 offset_bottom = 648.0
 split_offset = 325
-script = ExtResource("3_wojlp")
+script = ExtResource("2_k6d74")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer"]
 layout_mode = 2
@@ -34,7 +53,7 @@ hide_root = true
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-script = ExtResource("2_0uvuq")
+script = ExtResource("3_ljqyw")
 text_distance = 10.0
 margin_left = 5.0
 margin_right = 5.0
@@ -46,7 +65,7 @@ metadata/_custom_type_script = "uid://xakxyv1r778s"
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("2_kj2ww")
+texture = ExtResource("4_jv7dx")
 
 [node name="ModName" type="Label" parent="HSplitContainer/ModInfo"]
 custom_minimum_size = Vector2(500, 0)
@@ -90,6 +109,7 @@ text = "Remove Mod"
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 31.0
+script = ExtResource("5_6qkjt")
 
 [node name="File" type="MenuButton" parent="MenuBar"]
 layout_mode = 0
@@ -97,13 +117,11 @@ offset_left = 8.0
 offset_right = 75.0
 offset_bottom = 31.0
 text = "File"
-item_count = 3
+item_count = 2
 popup/item_0/text = "New Mod"
 popup/item_0/id = 0
-popup/item_1/text = "Import Mod"
+popup/item_1/text = "Reload List"
 popup/item_1/id = 1
-popup/item_2/text = "Export Mod"
-popup/item_2/id = 2
 
 [node name="Edit" type="MenuButton" parent="MenuBar"]
 layout_mode = 0
@@ -111,16 +129,13 @@ offset_left = 88.0
 offset_right = 155.0
 offset_bottom = 31.0
 text = "Edit"
-item_count = 5
-popup/item_0/text = "Change Mod Name"
+item_count = 3
+popup/item_0/text = "Change mod data"
 popup/item_0/id = 0
-popup/item_1/text = "Change Description"
 popup/item_1/id = 1
-popup/item_2/text = "Change Mod Music Wad"
+popup/item_1/separator = true
+popup/item_2/text = "Change Hotline Miami 2 Path"
 popup/item_2/id = 2
-popup/item_3/id = 4
-popup/item_3/separator = true
-popup/item_4/text = "Change settings"
-popup/item_4/id = 3
 
+[connection signal="dir_selected" from="PathDialog" to="MenuBar" method="_on_hlm_2_path_dialog_dir_selected"]
 [connection signal="item_selected" from="HSplitContainer/ScrollContainer/Mods" to="." method="_on_mods_item_selected"]

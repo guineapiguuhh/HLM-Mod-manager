@@ -31,7 +31,7 @@ func reload() -> int:
 	return change_to_file(path)
 
 func unload():
-	current.free()
+	current.queue_free()
 
 func get_mouse_pos() -> Vector2:
 	return current.get_local_mouse_position()

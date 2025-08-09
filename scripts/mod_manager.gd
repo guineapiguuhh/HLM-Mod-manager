@@ -1,16 +1,5 @@
 extends Node
 
-const PATCH_EXT := ".patchwad"
-const MUSIC_EXT := ".wad"
-
-var user_profile := OS.get_environment("USERPROFILE")
-var my_games_path := user_profile + "/Documents/My Games/"
-
-var mods_path := my_games_path + "HLM 2 Mod manager/mods/"
-var hlm2_mods_path := my_games_path + "HotlineMiami2/mods/"
-
-var hlm2_path := "C:/Users/dagui/Desktop/Master of orion 2 modded/Hotline Miami 2 - Wrong Number/"
-
 var mods: Array[Dictionary] = []
 var current_mod: Dictionary
 
@@ -20,37 +9,42 @@ func _ready() -> void:
 func update_mods() -> void:
 	mods = []
 
-	for dir_name in DirAccess.get_directories_at(mods_path):
-		var data_path := mods_path + dir_name + "/mod.json"
+	for dir_name in DirAccess.get_directories_at(Path.mods_folder):
+		var data_path := Path.mods_folder + dir_name + "/mod.json"
 
-		if not FileAccess.file_exists(data_path): continue
+		if !FileAccess.file_exists(data_path): continue
 
 		var base_data:FileAccess = FileAccess.open(data_path, FileAccess.READ)
 		var parsed_data = JSON.parse_string(base_data.get_as_text())
 		mods.push_front(parsed_data)
 		
 func apply_mod(data: Dictionary=current_mod) -> void:
-	var music_wad_name = "hlm2_music_desktop" + MUSIC_EXT
+	remove_patchwads()
+	add_patchwads(data)
+
+	var music_bytes = FileAccess.get_file_as_bytes(Path.mods_folder + data["name"] + "/" + Path.wad("hlm2_music_desktop"))
+	replace_music_wad(music_bytes)
+
+func remove_mod(_data: Dictionary=current_mod) -> void:
+	remove_patchwads()
+
+	var music_bytes = FileAccess.get_file_as_bytes(Path.mods_folder + Path.wad("hlm2_music_desktop"))
+	replace_music_wad(music_bytes)
+
+func replace_music_wad(bytes: PackedByteArray):
+	var music := FileAccess.open(Save.data["hlm2_dir"] + "/" + Path.wad("hlm2_music_desktop"), FileAccess.WRITE_READ)
+	music.store_buffer(bytes)
+
+func add_patchwads(data: Dictionary) -> void:
 	for patch in data["patchwads"]:
-		var file_name = patch + PATCH_EXT
+		var file_name = Path.patchwad(patch)
 
-		var patch_bytes = FileAccess.get_file_as_bytes(mods_path + data["name"] + "/" + file_name)
+		var patch_bytes = FileAccess.get_file_as_bytes(Path.mods_folder + data["name"] + "/" + file_name)
 
-		var mod := FileAccess.open(hlm2_mods_path + file_name, FileAccess.WRITE)
-		mod.store_buffer(patch_bytes)
+		var patchwad := FileAccess.open(Path.hlm2_mods_folder + file_name, FileAccess.WRITE)
+		patchwad.store_buffer(patch_bytes)
 
-	var music_bytes = FileAccess.get_file_as_bytes(mods_path + data["name"] + "/" + music_wad_name)
-
-	var music := FileAccess.open(hlm2_path + music_wad_name, FileAccess.WRITE_READ)
-	music.store_buffer(music_bytes)
-
-func remove_mod(data: Dictionary=current_mod) -> void:
-	var music_wad_name = "hlm2_music_desktop" + MUSIC_EXT
-	for patch in data["patchwads"]:
-		var file_name = patch + PATCH_EXT
-		DirAccess.remove_absolute(hlm2_mods_path + file_name)
-
-	var music_bytes = FileAccess.get_file_as_bytes(mods_path + "/" + music_wad_name)
-
-	var music := FileAccess.open(hlm2_path + music_wad_name, FileAccess.WRITE_READ)
-	music.store_buffer(music_bytes)
+func remove_patchwads() -> void:
+	for patch in DirAccess.get_files_at(Path.hlm2_mods_folder):
+		if Save.data["global_patchwads"].has(patch): continue
+		DirAccess.remove_absolute(Path.hlm2_mods_folder + patch)

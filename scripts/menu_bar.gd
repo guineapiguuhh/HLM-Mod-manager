@@ -1,0 +1,24 @@
+extends MenuBar
+
+func _ready() -> void:
+	$File.get_popup().id_pressed.connect(_file_pressed)
+	$Edit.get_popup().id_pressed.connect(_edit_pressed)
+
+func _file_pressed(id: int) -> void:
+	match id:
+		0:
+			print("New mod...")
+		1:
+			ModManager.update_mods()
+			Scene.reload()
+
+func _edit_pressed(id: int) -> void:
+	match id:
+		0:
+			print("Change mod data...")
+		2:
+			%PathDialog.show()
+
+func _on_hlm_2_path_dialog_dir_selected(dir: String) -> void:
+	Save.data["hlm2_dir"] = dir
+	Save.save()

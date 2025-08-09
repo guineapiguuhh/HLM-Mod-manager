@@ -32,8 +32,19 @@ func _ready() -> void:
 	$Buttons/Remove.pressed.connect(_remove_pressed_mod);
 	queue_sort()
 	
-func _apply_pressed_mod(): ModManager.apply_mod()
-func _remove_pressed_mod(): ModManager.remove_mod()
+func _apply_pressed_mod(): 
+	if !Save.data["hlm2_dir"]:
+		%ErrorPopup.show()
+		return
+
+	ModManager.apply_mod()
+
+func _remove_pressed_mod(): 
+	if !Save.data["hlm2_dir"]:
+		%ErrorPopup.show()
+		return
+		
+	ModManager.remove_mod()
 
 func _notification(what):
 	if what == NOTIFICATION_SORT_CHILDREN:

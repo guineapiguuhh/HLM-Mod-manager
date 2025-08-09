@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 Scene="*res://addons/game_utils/utils/scene.gd"
 ModManager="*res://scripts/mod_manager.gd"
+Path="*res://scripts/path.gd"
+Save="*res://scripts/save.gd"
 
 [dotnet]
 

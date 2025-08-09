@@ -1,11 +1,11 @@
 extends Control
 
-func _ready() -> void:
-	var root: TreeItem = %Mods.create_item()
-	create_tree_items(root)
+var root: TreeItem
 
-func create_tree_items(root: TreeItem) -> void:
-	for data in ModManager.mods:
+func _ready() -> void:
+	root = %Mods.create_item()
+	
+	for data in ModManager.mods:	
 		var mod: TreeItem = %Mods.create_item(root)
 		mod.set_text(0, data["name"])
 
@@ -23,3 +23,6 @@ func _on_mods_item_selected() -> void:
 	var data = get_mod_data(%Mods.get_selected())
 	ModManager.current_mod = data
 	%ModInfo.set_data()
+
+func _on_hlm_2_path_dialog_dir_selected(dir: String) -> void:
+	Path.hlm2_internal_path = dir
