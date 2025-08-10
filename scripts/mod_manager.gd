@@ -62,7 +62,7 @@ func get_patchwads(mod_name: String) -> PackedStringArray:
 
 func add_patchwads(data: Dictionary) -> void:
 	for patch in get_patchwads(data["name"]):
-		var patch_bytes = FileAccess.get_file_as_bytes(Path.mods_folder + data["name"] + "/" + patch)
+		var patch_bytes = FileAccess.get_file_as_bytes(Path.mods_folder + data["name"] + "/mods/" + patch)
 
 		var patchwad := FileAccess.open(Path.hlm2_mods_folder + patch, FileAccess.WRITE)
 		patchwad.store_buffer(patch_bytes)
