@@ -9,8 +9,8 @@ func _file_pressed(id: int) -> void:
 		0:
 			print("New mod...")
 		1:
-			ModManager.update_mods()
-			Scene.reload()
+			ModManager.reload()
+			Scene.current.reload_mods_tree()
 
 func _edit_pressed(id: int) -> void:
 	match id:
@@ -20,5 +20,5 @@ func _edit_pressed(id: int) -> void:
 			%PathDialog.show()
 
 func _on_hlm_2_path_dialog_dir_selected(dir: String) -> void:
-	Save.data["hlm2_dir"] = dir
+	Save.data["hlm2_dir"] = dir + "/"
 	Save.save()

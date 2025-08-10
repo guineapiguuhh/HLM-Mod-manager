@@ -51,23 +51,19 @@ hide_root = true
 
 [node name="ModInfo" type="PanelContainer" parent="HSplitContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("3_ljqyw")
-text_distance = 10.0
-margin_left = 5.0
-margin_right = 5.0
-margin_top = 5.0
-margin_bottom = 5.0
 metadata/_custom_type_script = "uid://xakxyv1r778s"
 
-[node name="ModPreview" type="TextureRect" parent="HSplitContainer/ModInfo"]
+[node name="Cover" type="TextureRect" parent="HSplitContainer/ModInfo"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 texture = ExtResource("4_jv7dx")
 
-[node name="ModName" type="Label" parent="HSplitContainer/ModInfo"]
+[node name="Name" type="Label" parent="HSplitContainer/ModInfo"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -75,20 +71,22 @@ size_flags_vertical = 0
 size_flags_stretch_ratio = 0.0
 theme_override_font_sizes/font_size = 32
 text = "Invalid mod"
+horizontal_alignment = 1
 
-[node name="ModDescription" type="Label" parent="HSplitContainer/ModInfo"]
+[node name="Description" type="Label" parent="HSplitContainer/ModInfo"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 20
 text = "Invalid description"
-autowrap_mode = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="Buttons" type="HBoxContainer" parent="HSplitContainer/ModInfo"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_horizontal = 0
+size_flags_vertical = 0
 theme_override_constants/separation = 20
 
 [node name="Apply" type="Button" parent="HSplitContainer/ModInfo/Buttons"]
@@ -96,14 +94,14 @@ custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
-text = "Apply Mod"
+text = "Enable"
 
 [node name="Remove" type="Button" parent="HSplitContainer/ModInfo/Buttons"]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
-text = "Remove Mod"
+text = "Disable"
 
 [node name="MenuBar" type="MenuBar" parent="."]
 layout_mode = 0
