@@ -28,6 +28,3 @@ func _on_mods_item_selected() -> void:
 	var data = get_mod_data(%Mods.get_selected())
 	ModManager.current = data
 	%ModInfo.set_data()
-
-func _on_hlm_2_path_dialog_dir_selected(dir: String) -> void:
-	Path.hlm2_internal_path = dir

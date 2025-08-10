@@ -12,24 +12,6 @@ anchors_preset = 0
 script = ExtResource("1_awiwq")
 metadata/_edit_lock_ = true
 
-[node name="PathDialog" type="FileDialog" parent="."]
-unique_name_in_owner = true
-title = "Open a Directory"
-initial_position = 1
-popup_window = true
-ok_button_text = "Select Current Folder"
-file_mode = 2
-access = 2
-
-[node name="ErrorPopup" type="AcceptDialog" parent="."]
-unique_name_in_owner = true
-title = "Error!"
-initial_position = 1
-size = Vector2i(393, 106)
-popup_window = true
-dialog_text = "You have not set the path for Hotline Miami 2!
-Go to Edit > Change Hotline Miami 2 Path"
-
 [node name="HSplitContainer" type="HSplitContainer" parent="."]
 layout_mode = 2
 offset_top = 31.0
@@ -135,5 +117,16 @@ popup/item_1/separator = true
 popup/item_2/text = "Change Hotline Miami 2 Path"
 popup/item_2/id = 2
 
-[connection signal="dir_selected" from="PathDialog" to="MenuBar" method="_on_hlm_2_path_dialog_dir_selected"]
+[node name="PathDialog" type="NativeFileDialog" parent="."]
+title = "Open a HLM2 Directory"
+file_mode = 2
+access = 2
+unique_name_in_owner = true
+
+[node name="ErrorDialog" type="NativeAcceptDialog" parent="."]
+title = "Error!"
+dialog_icon = 2
+unique_name_in_owner = true
+
 [connection signal="item_selected" from="HSplitContainer/ScrollContainer/Mods" to="." method="_on_mods_item_selected"]
+[connection signal="dir_selected" from="PathDialog" to="MenuBar" method="_on_path_dialog_dir_selected"]

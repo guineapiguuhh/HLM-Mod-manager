@@ -19,6 +19,6 @@ func _edit_pressed(id: int) -> void:
 		2:
 			%PathDialog.show()
 
-func _on_hlm_2_path_dialog_dir_selected(dir: String) -> void:
+func _on_path_dialog_dir_selected(dir: String) -> void:
 	Save.data["hlm2_dir"] = dir + "/"
 	Save.save()

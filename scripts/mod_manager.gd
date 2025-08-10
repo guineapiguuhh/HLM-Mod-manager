@@ -40,8 +40,9 @@ func apply(data: Dictionary=current) -> void:
 	var music_path = Path.mods_folder + data["name"] + "/" + Path.wad("hlm2_music_desktop")
 	replace_music_wad(music_path)
 
-func remove(_data: Dictionary=current) -> void:
+func remove(data: Dictionary=current) -> void:
 	remove_all_patchwads()
+	remove_patchwads(data)
 
 	var music_path = Path.app_folder + Path.wad("hlm2_music_desktop")
 	replace_music_wad(music_path)
