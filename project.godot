@@ -10,17 +10,18 @@ config_version=5
 
 [application]
 
-config/name="HLM2 Mod manager"
+config/name="HLM Mod manager"
 run/main_scene="uid://dqlthqy30gb5l"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Scene="*res://addons/game_utils/utils/scene.gd"
-ModManager="*res://scripts/mod_manager.gd"
+Manager="*res://scripts/manager.gd"
+Installer="*res://scripts/installer.gd"
 Path="*res://scripts/path.gd"
 Save="*res://scripts/save.gd"
+Scene="*res://addons/game_utils/utils/scene.gd"
 
 [dotnet]
 
@@ -28,7 +29,7 @@ project/assembly_name="HTM2 Mod manager"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/game_utils/plugin.cfg")
+enabled=PackedStringArray("res://addons/game_utils/plugin.cfg", "res://addons/native_dialogs/plugin.cfg")
 
 [rendering]
 

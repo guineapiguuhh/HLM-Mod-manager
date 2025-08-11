@@ -1,11 +1,10 @@
 extends Node
 
-var file_name := "save.json"
+var file_name := Path.json("save")
 var file_path := "user://" + file_name
 
 var init_data := {
-	"hlm2_dir": null,
-	"global_patchwads": []
+	"hlm2_dir": null
 }
 
 var data := {}

@@ -1,25 +1,24 @@
 class_name ModContainer extends PanelContainer
 
-func _ready() -> void:
-	$Buttons/Apply.pressed.connect(_apply_pressed_mod);
-	$Buttons/Remove.pressed.connect(_remove_pressed_mod);
+var mod: Dictionary
 
+func _ready() -> void:
 	resized.connect(func(): queue_sort())
 	queue_sort()
-	
-func _apply_pressed_mod(): 
+
+func _on_apply_pressed() -> void:
 	if !Save.data["hlm2_dir"]:
-		%ErrorPopup.show()
+		%ErrorDialog.show()
 		return
 
-	ModManager.apply()
+	Installer.install(mod)
 
-func _remove_pressed_mod(): 
+func _on_remove_pressed() -> void:
 	if !Save.data["hlm2_dir"]:
-		%ErrorPopup.show()
+		%ErrorDialog.show()
 		return
-		
-	ModManager.remove()
+
+	Installer.uninstall(mod)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_SORT_CHILDREN:
@@ -47,8 +46,11 @@ func get_children_rect() -> Rect2:
 
 	return result
 
-func set_data(data: Dictionary=ModManager.current) -> void:
-	$Name.text = data["display_name"]
-	$Description.text = data["description"]
+func set_mod(config: Dictionary) -> void:
+	mod = config
+
+	$Name.text = config["display_name"]
+	$Description.text = config["description"]
+	#$Cover.texture = load(Path.mod(config["folder_name"]) + config["cover_image"])
 
 	queue_sort()

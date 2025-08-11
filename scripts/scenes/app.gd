@@ -5,12 +5,12 @@ extends Control
 func _ready() -> void:
 	reload_mods_tree()
 
-func reload_mods_tree():
-	ModManager.reload()
+func reload_mods_tree() -> void:
+	Manager.reload()
 	for item in root.get_children():
 		item.free()
 
-	for data in ModManager.mods:	
+	for data in Manager.mods:	
 		var mod: TreeItem = %Mods.create_item(root)
 		mod.set_text(0, data["display_name"])
 
@@ -25,6 +25,5 @@ func get_mod_data(item: TreeItem) -> Variant:
 	return JSON.parse_string(base_data)
 
 func _on_mods_item_selected() -> void:
-	var data = get_mod_data(%Mods.get_selected())
-	ModManager.current = data
-	%ModInfo.set_data()
+	var config = get_mod_data(%Mods.get_selected())
+	%ModInfo.set_mod(config)
