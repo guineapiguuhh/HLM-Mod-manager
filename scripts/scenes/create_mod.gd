@@ -12,6 +12,9 @@ func _on_save_pressed() -> void:
 	}
 	
 	Manager.create(config, music, patchwads)
+	Manager.reload()
+	Scene.current.reload_mods_tree()
+	
 	_on_close_requested()
 
 func _on_patch_wads_pressed() -> void:

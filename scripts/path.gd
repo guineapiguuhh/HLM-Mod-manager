@@ -25,8 +25,19 @@ func get_user_path() -> String:
 	}
 	return systems[OS.get_name()]
 
+func remove_dir(path: String) -> int:
+	for file in DirAccess.get_files_at(path):
+		DirAccess.remove_absolute(path.path_join(file))
+
+	for directory in DirAccess.get_directories_at(path):
+		remove_dir(path.path_join(directory))
+
+	DirAccess.remove_absolute(path)
+
+	return OK
+
 func mod(mod_name: String) -> String:
-	return mods_folder + mod_name + "/"
+	return mods_folder + mod_name
 
 func json(path: String) -> String:
 	return path + ".json"

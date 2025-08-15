@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgby631jfaw3x"]
+
+[ext_resource type="Script" uid="uid://k7yr23glnb0" path="res://scripts/scenes/delete_mod.gd" id="1_htigd"]
+
+[node name="DeleteMod" type="Window"]
+title = "Delete Mod"
+initial_position = 2
+size = Vector2i(290, 150)
+script = ExtResource("1_htigd")
+
+[node name="Want" type="Label" parent="."]
+offset_top = 10.0
+offset_right = 290.0
+offset_bottom = 89.0
+text = "You really want to delete"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Delete" type="Button" parent="."]
+offset_left = 116.0
+offset_top = 112.0
+offset_right = 175.0
+offset_bottom = 143.0
+text = "Yes"
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="pressed" from="Delete" to="." method="_on_delete_pressed"]

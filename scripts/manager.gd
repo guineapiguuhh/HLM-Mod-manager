@@ -15,7 +15,7 @@ func reload() -> void:
 	global_patchwads = []
 
 	for dir_name in DirAccess.get_directories_at(Path.mods_folder):
-		var data_path := Path.mod(dir_name) + Path.json("settings")
+		var data_path := Path.mod(dir_name) + "/" + Path.json("settings")
 		if !FileAccess.file_exists(data_path): continue
 
 		var base_data:FileAccess = FileAccess.open(data_path, FileAccess.READ)
@@ -41,7 +41,7 @@ func create(
 ) -> void:
 	config.merge(mod_structure)
 
-	var path := Path.mod(config["folder_name"])
+	var path := Path.mod(config["folder_name"]) + "/"
 	DirAccess.make_dir_absolute(path)
 	DirAccess.make_dir_absolute(path + "mods/")
 
@@ -57,7 +57,7 @@ func create(
 		patchwad_file.store_buffer(patchwad[1])
 
 func delete(mod_name: String) -> void:
-	DirAccess.remove_absolute(Path.mod(mod_name))
+	Path.remove_dir(Path.mod(mod_name))
 
 func get_patchwads(mod_name: String) -> PackedStringArray:
 	var path := Path.mod(mod_name) + "mods/"

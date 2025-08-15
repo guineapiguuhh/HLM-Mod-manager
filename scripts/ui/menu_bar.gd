@@ -1,6 +1,7 @@
 extends MenuBar
 
 const CREATE_MOD_WINDOW := preload("res://scenes/create_mod.tscn")
+const DELETE_MOD_WINDOW := preload("res://scenes/delete_mod.tscn")
 
 var item_structure: Dictionary = {
 	"separator": false,
@@ -16,7 +17,8 @@ func _ready() -> void:
 	}, $File)
 
 	add_item({  
-		"name": "Delete Mod"
+		"name": "Delete Mod",
+		"func": _delete_mod
 	}, $File)
 
 	add_item({  
@@ -66,6 +68,10 @@ func add_item(from: Dictionary, to: MenuButton) -> void:
 
 func _create_mod() -> void:
 	var window := CREATE_MOD_WINDOW.instantiate()
+	Scene.add(window)
+
+func _delete_mod() -> void:
+	var window := DELETE_MOD_WINDOW.instantiate()
 	Scene.add(window)
 
 func _reload_list() -> void:
