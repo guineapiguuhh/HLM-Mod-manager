@@ -44,6 +44,16 @@ func _ready() -> void:
 		"func": _change_hlm2_path
 	}, $Edit)
 
+	add_item({  
+		"name": "Change HLM2 Mods Path",
+		"func": _change_hlm2_mods_path
+	}, $Edit)
+
+	add_item({  
+		"name": "Change Mods Path",
+		"func": _change_mods_path
+	}, $Edit)
+
 
 func add_item(from: Dictionary, to: MenuButton) -> void:
 	var safe := item_structure.duplicate()
@@ -79,17 +89,38 @@ func _reload_list() -> void:
 	Scene.current.reload_mods_tree()
 
 func _change_hlm2_path() -> void:
-	%PathDialog.show()
+	%HLMPathDialog.show()
+
+func _change_hlm2_mods_path() -> void:
+	%HLMModsPathDialog.show()
+
+func _change_mods_path() -> void:
+	%ModsPathDialog.show()
 
 func _on_path_dialog_dir_selected(dir: String) -> void:
-	Save.data["hlm2_dir"] = dir + "/"
+	Save.data["hlm2_dir"] = dir
+	import_vanilla_music()
+	Save.save()
 
-	var path = Save.data["hlm2_dir"] + Path.wad("hlm2_music_desktop")
-	var to_path = Path.app_folder + Path.wad("vanilla_music")
-	if FileAccess.file_exists(path) && !FileAccess.file_exists(to_path):
-		var music_bytes = FileAccess.get_file_as_bytes(path)
-
-		var vanilla_music := FileAccess.open(to_path, FileAccess.WRITE)
-		vanilla_music.store_buffer(music_bytes)
+func _on_hlm_mods_path_dialog_dir_selected(dir:String) -> void:
+	Save.data["hlm2_mods_dir"] = dir
 
 	Save.save()
+
+func _on_mods_path_dialog_dir_selected(dir:String) -> void:
+	Save.data["mods_dir"] = dir
+	import_vanilla_music()
+
+	Manager.reload()
+	Scene.current.reload_mods_tree()
+
+	Save.save()
+
+func import_vanilla_music() -> void:
+	var path = Save.data["hlm2_dir"] + "/" + Path.wad("hlm2_music_desktop")
+	if FileAccess.file_exists(path) && Save.data["mods_dir"]:
+		var music_bytes = FileAccess.get_file_as_bytes(path)
+
+		var to_path = Save.data["mods_dir"] + Path.wad("vanilla_music")
+		var vanilla_music := FileAccess.open(to_path, FileAccess.WRITE)
+		vanilla_music.store_buffer(music_bytes)

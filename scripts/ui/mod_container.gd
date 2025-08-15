@@ -7,14 +7,14 @@ func _ready() -> void:
 	queue_sort()
 
 func _on_apply_pressed() -> void:
-	if !Save.data["hlm2_dir"]:
+	if !Save.defined_dirs():
 		%ErrorDialog.show()
 		return
 
 	Installer.install(mod)
 
 func _on_remove_pressed() -> void:
-	if !Save.data["hlm2_dir"]:
+	if !Save.defined_dirs():
 		%ErrorDialog.show()
 		return
 
@@ -22,7 +22,7 @@ func _on_remove_pressed() -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_SORT_CHILDREN:
-		$Name.position.y += $Cover.size.y + 25
+		$Name.position.y += $Cover.size.y * $Cover.scale.y + 25
 
 		$Description.position.y = $Name.position.y
 		$Description.position.y += $Name.size.y + 40
@@ -33,7 +33,7 @@ func _notification(what: int) -> void:
 
 		for child: Control in get_children():
 			var rect := get_children_rect()
-			child.position.x += (size.x - child.size.x) / 2
+			child.position.x += (size.x - child.size.x * child.scale.x) / 2
 			child.position.y += (size.y - rect.size.y) / 2
 
 func get_children_rect() -> Rect2:
@@ -42,7 +42,8 @@ func get_children_rect() -> Rect2:
 
 	var result := Rect2()
 	result.position = first_child.position
-	result.size = final_child.position + final_child.size
+	result.size.y = final_child.position.y + final_child.size.y
+	result.size.x = 50
 
 	return result
 
@@ -51,6 +52,11 @@ func set_mod(config: Dictionary) -> void:
 
 	$Name.text = config["display_name"]
 	$Description.text = config["description"]
-	#$Cover.texture = load(Path.mod(config["folder_name"]) + config["cover_image"])
+
+	var image_path: String = Path.mod(config["folder_name"]) + "/cover.png"
+	$Cover.texture = load("res://icon.svg")
+	if FileAccess.file_exists(image_path):
+		var image := Image.load_from_file(image_path)
+		$Cover.texture = ImageTexture.create_from_image(image)
 
 	queue_sort()

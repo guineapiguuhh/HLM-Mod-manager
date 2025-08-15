@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://df5ht4ajrquck" path="res://images/upload-button.png" id="2_4hy0d"]
 
 [node name="CreateMod" type="Window"]
-title = "New Mod"
+title = "Create Mod"
 initial_position = 2
-size = Vector2i(500, 250)
+size = Vector2i(500, 290)
 unresizable = true
 script = ExtResource("1_j3d0l")
 
@@ -27,9 +27,9 @@ placeholder_text = "Display name"
 [node name="Description" type="LineEdit" parent="."]
 custom_minimum_size = Vector2(285, 0)
 offset_left = 10.0
-offset_top = 101.0
+offset_top = 110.0
 offset_right = 295.0
-offset_bottom = 230.0
+offset_bottom = 239.0
 placeholder_text = "Description"
 
 [node name="GlobalPatchWads" type="CheckBox" parent="."]
@@ -41,9 +41,9 @@ text = "Global Patch Wads"
 
 [node name="Save" type="Button" parent="."]
 offset_left = 438.0
-offset_top = 199.0
+offset_top = 255.0
 offset_right = 490.0
-offset_bottom = 230.0
+offset_bottom = 286.0
 text = "Save"
 
 [node name="MusicWad" type="Label" parent="."]
@@ -54,6 +54,7 @@ offset_bottom = 78.0
 text = "Music Wad:"
 
 [node name="Upload" type="Button" parent="MusicWad"]
+layout_mode = 0
 offset_top = 24.0
 offset_right = 159.0
 offset_bottom = 55.0
@@ -62,12 +63,28 @@ icon_alignment = 1
 
 [node name="PatchWads" type="Label" parent="."]
 offset_left = 331.0
-offset_top = 120.0
+offset_top = 112.0
 offset_right = 430.0
-offset_bottom = 143.0
+offset_bottom = 135.0
 text = "Patch Wads: "
 
 [node name="Upload" type="Button" parent="PatchWads"]
+layout_mode = 0
+offset_top = 24.0
+offset_right = 159.0
+offset_bottom = 55.0
+icon = ExtResource("2_4hy0d")
+icon_alignment = 1
+
+[node name="CoverImage" type="Label" parent="."]
+offset_left = 331.0
+offset_top = 184.0
+offset_right = 432.0
+offset_bottom = 207.0
+text = "Cover Image:"
+
+[node name="Upload" type="Button" parent="CoverImage"]
+layout_mode = 0
 offset_top = 24.0
 offset_right = 159.0
 offset_bottom = 55.0
@@ -88,9 +105,17 @@ file_mode = 1
 access = 2
 filters = PackedStringArray("*.patchwad ; Patch Wad Files")
 
+[node name="CoverImageDialog" type="NativeFileDialog" parent="."]
+title = "Open a File"
+file_mode = 0
+access = 2
+filters = PackedStringArray("")
+
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
 [connection signal="pressed" from="Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="MusicWad/Upload" to="." method="_on_music_wad_pressed"]
 [connection signal="pressed" from="PatchWads/Upload" to="." method="_on_patch_wads_pressed"]
+[connection signal="pressed" from="CoverImage/Upload" to="." method="_on_upload_pressed"]
 [connection signal="file_selected" from="MusicDialog" to="." method="_on_music_dialog_file_selected"]
 [connection signal="files_selected" from="PatchWadsDialog" to="." method="_on_patch_wads_dialog_files_selected"]
+[connection signal="file_selected" from="CoverImageDialog" to="." method="_on_cover_image_dialog_file_selected"]

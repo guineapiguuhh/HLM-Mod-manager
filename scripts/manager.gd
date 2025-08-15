@@ -3,8 +3,7 @@ extends Node
 var mod_structure: Dictionary = {
 	"display_name": null,
 	"description": "Hotline Miami 2 Mod.",
-	"global_patchwads": false,
-	"cover_image": null
+	"global_patchwads": false
 }
 
 var mods: Array[Dictionary] = []
@@ -14,8 +13,11 @@ func reload() -> void:
 	mods = []
 	global_patchwads = []
 
-	for dir_name in DirAccess.get_directories_at(Path.mods_folder):
+	if !Save.data["mods_dir"]: return
+
+	for dir_name in DirAccess.get_directories_at(Save.data["mods_dir"]):
 		var data_path := Path.mod(dir_name) + "/" + Path.json("settings")
+		print(dir_name)
 		if !FileAccess.file_exists(data_path): continue
 
 		var base_data:FileAccess = FileAccess.open(data_path, FileAccess.READ)
@@ -29,15 +31,14 @@ func reload() -> void:
 		data["patchwads"] = get_patchwads(data["folder_name"])
 		if data["global_patchwads"]:
 			global_patchwads.append_array(data["patchwads"])
-		
-		data["cover_image"] = "cover.png"
 
 		mods.append(data)
 		
 func create(
 	config: Dictionary, 
 	music_bytes: PackedByteArray, 
-	patchwads: Array[Variant]
+	patchwads: Array[Variant],
+	cover_image: Image
 ) -> void:
 	config.merge(mod_structure)
 
@@ -55,12 +56,15 @@ func create(
 	for patchwad in patchwads:
 		var patchwad_file := FileAccess.open(path + "mods/" + patchwad[0], FileAccess.WRITE)
 		patchwad_file.store_buffer(patchwad[1])
+	
+	if cover_image:
+		cover_image.save_png(path + "cover.png")
 
 func delete(mod_name: String) -> void:
 	Path.remove_dir(Path.mod(mod_name))
 
 func get_patchwads(mod_name: String) -> PackedStringArray:
-	var path := Path.mod(mod_name) + "mods/"
+	var path := Path.mod(mod_name) + "/mods/"
 	if !DirAccess.dir_exists_absolute(path):
 		return []
 	return DirAccess.get_files_at(path)

@@ -5,18 +5,6 @@ extends Node
 const PATCHWAD_EXT := ".patchwad"
 const WAD_EXT := ".wad"
 
-var my_games_folder := get_user_path() + "/Documents/My Games/"
-
-var app_folder := my_games_folder + "HLM Mod manager/"
-var mods_folder := app_folder + "mods/"
-
-var hlm2_folder := my_games_folder + "HotlineMiami2/"
-var hlm2_mods_folder := hlm2_folder + "mods/"
-
-func _ready() -> void:
-	DirAccess.make_dir_absolute(app_folder)
-	DirAccess.make_dir_absolute(mods_folder)
-
 func get_user_path() -> String:
 	var systems := {
 		"Windows": OS.get_environment("USERPROFILE"),
@@ -37,7 +25,7 @@ func remove_dir(path: String) -> int:
 	return OK
 
 func mod(mod_name: String) -> String:
-	return mods_folder + mod_name
+	return Save.data["mods_dir"] + "/" + mod_name
 
 func json(path: String) -> String:
 	return path + ".json"

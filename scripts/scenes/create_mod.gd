@@ -2,6 +2,7 @@ extends Window
 
 var music: PackedByteArray
 var patchwads: Array[Variant]
+var cover_image: Image
 
 func _on_save_pressed() -> void:
 	var config := {
@@ -11,7 +12,13 @@ func _on_save_pressed() -> void:
 		"global_patchwads": $GlobalPatchWads.button_pressed
 	}
 	
-	Manager.create(config, music, patchwads)
+	Manager.create(
+		config, 
+		music, 
+		patchwads,
+		cover_image
+	)
+
 	Manager.reload()
 	Scene.current.reload_mods_tree()
 	
@@ -22,6 +29,9 @@ func _on_patch_wads_pressed() -> void:
 
 func _on_music_wad_pressed() -> void:
 	$MusicDialog.show()
+
+func _on_upload_pressed() -> void:
+	$CoverImageDialog.show()
 
 func _on_patch_wads_dialog_files_selected(paths:PackedStringArray) -> void:
 	patchwads = []
@@ -35,5 +45,11 @@ func _on_music_dialog_file_selected(path:String) -> void:
 	var bytes := FileAccess.get_file_as_bytes(path)
 	music = bytes
 
+func _on_cover_image_dialog_file_selected(path:String) -> void:
+	cover_image = Image.load_from_file(path)
+
 func _on_close_requested() -> void: 
 	queue_free()
+
+
+

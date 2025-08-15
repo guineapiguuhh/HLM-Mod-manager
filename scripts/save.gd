@@ -4,7 +4,9 @@ var file_name := Path.json("save")
 var file_path := "user://" + file_name
 
 var init_data := {
-	"hlm2_dir": null
+	"hlm2_dir": null,
+	"hlm2_mods_dir": null,
+	"mods_dir": null
 }
 
 var data := {}
@@ -25,3 +27,6 @@ func save() -> void:
 	var new_data := JSON.stringify(data)
 	var file := FileAccess.open(file_path, FileAccess.WRITE_READ)
 	file.store_string(new_data)
+
+func defined_dirs() -> bool:
+	return data["hlm2_mods_dir"] && data["mods_dir"] && data["hlm2_dir"]

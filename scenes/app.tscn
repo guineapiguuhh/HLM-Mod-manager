@@ -106,18 +106,37 @@ offset_right = 155.0
 offset_bottom = 31.0
 text = "Edit"
 
-[node name="PathDialog" type="NativeFileDialog" parent="."]
-title = "Open a Directory"
+[node name="HLMModsPathDialog" type="NativeFileDialog" parent="."]
+title = "Open Hotline Miami 2 Mods Directory"
+file_mode = 2
+unique_name_in_owner = true
+
+[node name="ModsPathDialog" type="NativeFileDialog" parent="."]
+title = "Open a Mods Directory"
+mode_overrides_title = false
+file_mode = 2
+unique_name_in_owner = true
+
+[node name="HLMPathDialog" type="NativeFileDialog" parent="."]
+title = "Open Hotline Miami 2 Directory"
+mode_overrides_title = false
 file_mode = 2
 access = 2
 unique_name_in_owner = true
 
 [node name="ErrorDialog" type="NativeAcceptDialog" parent="."]
 title = "Error!"
+dialog_text = "Please define the paths.
+
+Edit > Change HLM Path
+Edit > Change HLM Mods Path
+Edit > Change Mods Path"
 dialog_icon = 2
 unique_name_in_owner = true
 
 [connection signal="item_selected" from="HSplitContainer/ScrollContainer/Mods" to="." method="_on_mods_item_selected"]
 [connection signal="pressed" from="HSplitContainer/ModInfo/Buttons/Apply" to="HSplitContainer/ModInfo" method="_on_apply_pressed"]
 [connection signal="pressed" from="HSplitContainer/ModInfo/Buttons/Remove" to="HSplitContainer/ModInfo" method="_on_remove_pressed"]
-[connection signal="dir_selected" from="PathDialog" to="MenuBar" method="_on_path_dialog_dir_selected"]
+[connection signal="dir_selected" from="HLMModsPathDialog" to="MenuBar" method="_on_hlm_mods_path_dialog_dir_selected"]
+[connection signal="dir_selected" from="ModsPathDialog" to="MenuBar" method="_on_mods_path_dialog_dir_selected"]
+[connection signal="dir_selected" from="HLMPathDialog" to="MenuBar" method="_on_path_dialog_dir_selected"]
