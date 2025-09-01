@@ -18,9 +18,9 @@ func _on_save_pressed() -> void:
 
 	Manager.create(
 		config, 
+		image_bytes,
 		music_bytes, 
-		$PatchWads/Upload.content,
-		image_bytes
+		$PatchWads/Upload.content
 	)
 
 	Scene.current.reload_mods_tree()
