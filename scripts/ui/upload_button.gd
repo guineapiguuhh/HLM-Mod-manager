@@ -9,7 +9,7 @@ var UPLOAD_TEXTURE = preload("res://images/upload.png")
 @export var filters: PackedStringArray
 @export var file_mode: NativeFileDialog.FileMode
 
-@export var dialog_title: String = ""
+@export var dialog_title: String
 
 var content: Array[Variant] = []
 
