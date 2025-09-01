@@ -38,7 +38,7 @@ func create(
 	config: Dictionary, 
 	music_bytes: PackedByteArray, 
 	patchwads: Array[Variant],
-	cover_image: Image
+	image: PackedByteArray
 ) -> void:
 	config.merge(mod_structure)
 
@@ -49,16 +49,17 @@ func create(
 	var config_file := FileAccess.open(path + Path.json("settings"), FileAccess.WRITE)
 	config_file.store_string(JSON.stringify(config))
 
-	if music_bytes:
+	if !music_bytes.is_empty():
 		var music_file := FileAccess.open(path + Path.wad("music"), FileAccess.WRITE)
 		music_file.store_buffer(music_bytes)
 
-	for patchwad in patchwads:
-		var patchwad_file := FileAccess.open(path + "mods/" + patchwad[0], FileAccess.WRITE)
-		patchwad_file.store_buffer(patchwad[1])
+	for patchwad: Array in patchwads:
+		var patchwad_file := FileAccess.open(path + "mods/" + patchwad.front(), FileAccess.WRITE)
+		patchwad_file.store_buffer(patchwad.back())
 	
-	if cover_image:
-		cover_image.save_png(path + "cover.png")
+	if !image.is_empty():
+		var image_file := FileAccess.open(path + Path.png("cover"), FileAccess.WRITE)
+		image_file.store_buffer(image)
 
 func delete(mod_name: String) -> void:
 	Path.remove_dir(Path.mod(mod_name))

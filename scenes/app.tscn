@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bnvn437x18vg7" path="res://scripts/scenes/app.gd" id="1_awiwq"]
 [ext_resource type="Script" uid="uid://ca2r0vf2xtwbl" path="res://scripts/ui/resize_container.gd" id="2_k6d74"]
 [ext_resource type="Script" uid="uid://xakxyv1r778s" path="res://scripts/ui/mod_container.gd" id="3_ljqyw"]
-[ext_resource type="Texture2D" uid="uid://8e2e5qomsykk" path="res://icon.svg" id="4_jv7dx"]
+[ext_resource type="Texture2D" uid="uid://b0tydc5ahf1hv" path="res://icon.png" id="4_awiwq"]
 [ext_resource type="Script" uid="uid://dpd2swr8axe5n" path="res://scripts/ui/menu_bar.gd" id="5_6qkjt"]
 
 [node name="App" type="Control"]
@@ -44,7 +44,7 @@ texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("4_jv7dx")
+texture = ExtResource("4_awiwq")
 
 [node name="Name" type="Label" parent="HSplitContainer/ModInfo"]
 custom_minimum_size = Vector2(500, 0)
@@ -106,37 +106,6 @@ offset_right = 155.0
 offset_bottom = 31.0
 text = "Edit"
 
-[node name="HLMModsPathDialog" type="NativeFileDialog" parent="."]
-title = "Open Hotline Miami 2 Mods Directory"
-file_mode = 2
-unique_name_in_owner = true
-
-[node name="ModsPathDialog" type="NativeFileDialog" parent="."]
-title = "Open a Mods Directory"
-mode_overrides_title = false
-file_mode = 2
-unique_name_in_owner = true
-
-[node name="HLMPathDialog" type="NativeFileDialog" parent="."]
-title = "Open Hotline Miami 2 Directory"
-mode_overrides_title = false
-file_mode = 2
-access = 2
-unique_name_in_owner = true
-
-[node name="ErrorDialog" type="NativeAcceptDialog" parent="."]
-title = "Error!"
-dialog_text = "Please define the paths.
-
-Edit > Change HLM Path
-Edit > Change HLM Mods Path
-Edit > Change Mods Path"
-dialog_icon = 2
-unique_name_in_owner = true
-
 [connection signal="item_selected" from="HSplitContainer/ScrollContainer/Mods" to="." method="_on_mods_item_selected"]
 [connection signal="pressed" from="HSplitContainer/ModInfo/Buttons/Apply" to="HSplitContainer/ModInfo" method="_on_apply_pressed"]
 [connection signal="pressed" from="HSplitContainer/ModInfo/Buttons/Remove" to="HSplitContainer/ModInfo" method="_on_remove_pressed"]
-[connection signal="dir_selected" from="HLMModsPathDialog" to="MenuBar" method="_on_hlm_mods_path_dialog_dir_selected"]
-[connection signal="dir_selected" from="ModsPathDialog" to="MenuBar" method="_on_mods_path_dialog_dir_selected"]
-[connection signal="dir_selected" from="HLMPathDialog" to="MenuBar" method="_on_path_dialog_dir_selected"]

@@ -89,32 +89,34 @@ func _reload_list() -> void:
 	Scene.current.reload_mods_tree()
 
 func _change_hlm2_path() -> void:
-	%HLMPathDialog.show()
+	NativeDialogs.open_dir_dialog(
+		"Open Hotline Miami 2 Directory", 
+		func (_dialogue, dir):
+			Save.data["hlm2_dir"] = dir
+			import_vanilla_music()
+			Save.save()
+	)
 
 func _change_hlm2_mods_path() -> void:
-	%HLMModsPathDialog.show()
+	NativeDialogs.open_dir_dialog(
+		"Open Hotline Miami 2 Mods Directory", 
+		func (_dialogue, dir):
+			Save.data["hlm2_mods_dir"] = dir
+
+			Save.save()
+	)
 
 func _change_mods_path() -> void:
-	%ModsPathDialog.show()
+	NativeDialogs.open_dir_dialog(
+		"Open a Directory", 
+		func (_dialogue, dir):
+			Save.data["mods_dir"] = dir
+			import_vanilla_music()
 
-func _on_path_dialog_dir_selected(dir: String) -> void:
-	Save.data["hlm2_dir"] = dir
-	import_vanilla_music()
-	Save.save()
+			Scene.current.reload_mods_tree()
 
-func _on_hlm_mods_path_dialog_dir_selected(dir:String) -> void:
-	Save.data["hlm2_mods_dir"] = dir
-
-	Save.save()
-
-func _on_mods_path_dialog_dir_selected(dir:String) -> void:
-	Save.data["mods_dir"] = dir
-	import_vanilla_music()
-
-	Manager.reload()
-	Scene.current.reload_mods_tree()
-
-	Save.save()
+			Save.save()
+	)
 
 func import_vanilla_music() -> void:
 	var path = Save.data["hlm2_dir"] + "/" + Path.wad("hlm2_music_desktop")

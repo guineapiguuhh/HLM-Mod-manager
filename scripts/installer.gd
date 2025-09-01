@@ -1,6 +1,7 @@
 extends Node
 
 func install(config: Dictionary) -> void:
+	remove_all_patchwads()
 	add_patchwads(config)
 
 	var music_path = Path.mod(config["folder_name"]) + "/" + Path.wad("music")
@@ -8,6 +9,7 @@ func install(config: Dictionary) -> void:
 	replace_music(music_bytes)
 
 func uninstall(config: Dictionary) -> void:
+	remove_all_patchwads()
 	remove_patchwads(config)
 
 	var music_path = Save.data["mods_dir"] + "/" + Path.wad("vanilla_music")
@@ -29,3 +31,8 @@ func add_patchwads(data: Dictionary) -> void:
 func remove_patchwads(data: Dictionary) -> void:
 	for patch in Manager.get_patchwads(data["folder_name"]):
 		DirAccess.remove_absolute(Save.data["hlm2_mods_dir"] + patch)
+
+func remove_all_patchwads() -> void:
+	for file in DirAccess.get_directories_at(Save.data["mods_dir"]):
+		if Manager.global_patchwads.has(file): continue
+		DirAccess.remove_absolute(Save.data["hlm2_mods_dir"] + file)

@@ -27,6 +27,9 @@ func remove_dir(path: String) -> int:
 func mod(mod_name: String) -> String:
 	return Save.data["mods_dir"] + "/" + mod_name
 
+func png(path: String) -> String:
+	return path + ".png"
+
 func json(path: String) -> String:
 	return path + ".json"
 

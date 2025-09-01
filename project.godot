@@ -13,7 +13,7 @@ config_version=5
 config/name="HLM Mod manager"
 run/main_scene="uid://dqlthqy30gb5l"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://b0tydc5ahf1hv"
 
 [autoload]
 
@@ -22,6 +22,7 @@ Installer="*res://scripts/installer.gd"
 Path="*res://scripts/path.gd"
 Save="*res://scripts/save.gd"
 Scene="*res://addons/game_utils/utils/scene.gd"
+NativeDialogs="*res://addons/native_dialogs/native_dialogs.gd"
 
 [dotnet]
 

@@ -1,36 +1,50 @@
 [gd_scene load_steps=3 format=3 uid="uid://cxl436u703qh7"]
 
 [ext_resource type="Script" uid="uid://crbyuaxsq02pg" path="res://scripts/scenes/create_mod.gd" id="1_j3d0l"]
-[ext_resource type="Texture2D" uid="uid://df5ht4ajrquck" path="res://images/upload-button.png" id="2_4hy0d"]
+[ext_resource type="Script" uid="uid://ir2qqnpbxwn1" path="res://scripts/ui/upload_button.gd" id="2_y5jx2"]
 
 [node name="CreateMod" type="Window"]
 title = "Create Mod"
 initial_position = 2
-size = Vector2i(500, 290)
+size = Vector2i(500, 298)
 unresizable = true
 script = ExtResource("1_j3d0l")
 
-[node name="FolderName" type="LineEdit" parent="."]
-offset_left = 10.0
+[node name="FolderName" type="Label" parent="."]
+offset_left = 8.0
 offset_top = 8.0
-offset_right = 295.0
-offset_bottom = 39.0
-placeholder_text = "Folder name"
+offset_right = 110.0
+offset_bottom = 31.0
+text = "Folder name:"
 
-[node name="Name" type="LineEdit" parent="."]
-offset_left = 10.0
-offset_top = 52.0
-offset_right = 295.0
-offset_bottom = 83.0
-placeholder_text = "Display name"
+[node name="LineEdit" type="LineEdit" parent="FolderName"]
+offset_top = 24.0
+offset_right = 285.0
+offset_bottom = 55.0
 
-[node name="Description" type="LineEdit" parent="."]
-custom_minimum_size = Vector2(285, 0)
-offset_left = 10.0
-offset_top = 110.0
-offset_right = 295.0
-offset_bottom = 239.0
-placeholder_text = "Description"
+[node name="DisplayName" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 71.0
+offset_right = 113.0
+offset_bottom = 94.0
+text = "Display name"
+
+[node name="LineEdit" type="LineEdit" parent="DisplayName"]
+offset_top = 24.0
+offset_right = 285.0
+offset_bottom = 55.0
+
+[node name="Description" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 134.0
+offset_right = 97.0
+offset_bottom = 157.0
+text = "Description"
+
+[node name="TextEdit" type="TextEdit" parent="Description"]
+offset_top = 24.0
+offset_right = 285.0
+offset_bottom = 153.0
 
 [node name="GlobalPatchWads" type="CheckBox" parent="."]
 offset_left = 315.0
@@ -39,48 +53,11 @@ offset_right = 490.0
 offset_bottom = 39.0
 text = "Global Patch Wads"
 
-[node name="Save" type="Button" parent="."]
-offset_left = 438.0
-offset_top = 255.0
-offset_right = 490.0
-offset_bottom = 286.0
-text = "Save"
-
-[node name="MusicWad" type="Label" parent="."]
-offset_left = 331.0
-offset_top = 55.0
-offset_right = 420.0
-offset_bottom = 78.0
-text = "Music Wad:"
-
-[node name="Upload" type="Button" parent="MusicWad"]
-layout_mode = 0
-offset_top = 24.0
-offset_right = 159.0
-offset_bottom = 55.0
-icon = ExtResource("2_4hy0d")
-icon_alignment = 1
-
-[node name="PatchWads" type="Label" parent="."]
-offset_left = 331.0
-offset_top = 112.0
-offset_right = 430.0
-offset_bottom = 135.0
-text = "Patch Wads: "
-
-[node name="Upload" type="Button" parent="PatchWads"]
-layout_mode = 0
-offset_top = 24.0
-offset_right = 159.0
-offset_bottom = 55.0
-icon = ExtResource("2_4hy0d")
-icon_alignment = 1
-
 [node name="CoverImage" type="Label" parent="."]
 offset_left = 331.0
-offset_top = 184.0
+offset_top = 56.0
 offset_right = 432.0
-offset_bottom = 207.0
+offset_bottom = 79.0
 text = "Cover Image:"
 
 [node name="Upload" type="Button" parent="CoverImage"]
@@ -88,34 +65,55 @@ layout_mode = 0
 offset_top = 24.0
 offset_right = 159.0
 offset_bottom = 55.0
-icon = ExtResource("2_4hy0d")
 icon_alignment = 1
+script = ExtResource("2_y5jx2")
+filters = PackedStringArray("*.png ; PNG File")
+dialog_title = "Open Image"
+metadata/_custom_type_script = "uid://ir2qqnpbxwn1"
 
-[node name="MusicDialog" type="NativeFileDialog" parent="."]
-title = "Open a Music Wad"
-mode_overrides_title = false
-file_mode = 0
-access = 2
-filters = PackedStringArray("*.wad ; Wad Files")
+[node name="MusicWad" type="Label" parent="."]
+offset_left = 331.0
+offset_top = 127.0
+offset_right = 420.0
+offset_bottom = 150.0
+text = "Music Wad:"
 
-[node name="PatchWadsDialog" type="NativeFileDialog" parent="."]
-title = "Open Patch Wad(s)"
-mode_overrides_title = false
+[node name="Upload" type="Button" parent="MusicWad"]
+layout_mode = 0
+offset_top = 24.0
+offset_right = 159.0
+offset_bottom = 55.0
+icon_alignment = 1
+script = ExtResource("2_y5jx2")
+filters = PackedStringArray("*.wad ; Wad File")
+dialog_title = "Open Music Wad"
+metadata/_custom_type_script = "uid://ir2qqnpbxwn1"
+
+[node name="PatchWads" type="Label" parent="."]
+offset_left = 331.0
+offset_top = 184.0
+offset_right = 430.0
+offset_bottom = 207.0
+text = "Patch Wads: "
+
+[node name="Upload" type="Button" parent="PatchWads"]
+layout_mode = 0
+offset_top = 24.0
+offset_right = 159.0
+offset_bottom = 55.0
+icon_alignment = 1
+script = ExtResource("2_y5jx2")
+filters = PackedStringArray("*.patchwad ; Patch Wad File")
 file_mode = 1
-access = 2
-filters = PackedStringArray("*.patchwad ; Patch Wad Files")
+dialog_title = "Open Patch Wad(s)"
+metadata/_custom_type_script = "uid://ir2qqnpbxwn1"
 
-[node name="CoverImageDialog" type="NativeFileDialog" parent="."]
-title = "Open a File"
-file_mode = 0
-access = 2
-filters = PackedStringArray("")
+[node name="Save" type="Button" parent="."]
+offset_left = 438.0
+offset_top = 255.0
+offset_right = 490.0
+offset_bottom = 286.0
+text = "Save"
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
 [connection signal="pressed" from="Save" to="." method="_on_save_pressed"]
-[connection signal="pressed" from="MusicWad/Upload" to="." method="_on_music_wad_pressed"]
-[connection signal="pressed" from="PatchWads/Upload" to="." method="_on_patch_wads_pressed"]
-[connection signal="pressed" from="CoverImage/Upload" to="." method="_on_upload_pressed"]
-[connection signal="file_selected" from="MusicDialog" to="." method="_on_music_dialog_file_selected"]
-[connection signal="files_selected" from="PatchWadsDialog" to="." method="_on_patch_wads_dialog_files_selected"]
-[connection signal="file_selected" from="CoverImageDialog" to="." method="_on_cover_image_dialog_file_selected"]

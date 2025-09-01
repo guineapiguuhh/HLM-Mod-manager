@@ -1,5 +1,6 @@
 class_name ModContainer extends PanelContainer
 
+const ERROR_TEXTURE = preload("res://icon.png")
 var mod: Dictionary
 
 func _ready() -> void:
@@ -8,14 +9,14 @@ func _ready() -> void:
 
 func _on_apply_pressed() -> void:
 	if !Save.defined_dirs():
-		%ErrorDialog.show()
+		open_error_dir_dialog()
 		return
 
 	Installer.install(mod)
 
 func _on_remove_pressed() -> void:
 	if !Save.defined_dirs():
-		%ErrorDialog.show()
+		open_error_dir_dialog()
 		return
 
 	Installer.uninstall(mod)
@@ -54,9 +55,16 @@ func set_mod(config: Dictionary) -> void:
 	$Description.text = config["description"]
 
 	var image_path: String = Path.mod(config["folder_name"]) + "/cover.png"
-	$Cover.texture = load("res://icon.svg")
+	$Cover.texture = ERROR_TEXTURE
 	if FileAccess.file_exists(image_path):
 		var image := Image.load_from_file(image_path)
 		$Cover.texture = ImageTexture.create_from_image(image)
 
 	queue_sort()
+
+func open_error_dir_dialog():
+	NativeDialogs.open_accept_dialog(
+		"Error",
+		NativeAcceptDialog.Icon.ICON_ERROR,
+		"Please define the paths.\nEdit > Change HLM Path\nEdit > Change HLM Mods Path\nEdit > Change Mods Path"
+	)
