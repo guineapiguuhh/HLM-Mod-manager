@@ -33,6 +33,7 @@ func remove_patchwads(data: Dictionary) -> void:
 		DirAccess.remove_absolute(Save.data["hlm2_mods_dir"] + patch)
 
 func remove_all_patchwads() -> void:
-	for file in DirAccess.get_directories_at(Save.data["mods_dir"]):
+	print(Manager.global_patchwads)
+	for file in DirAccess.get_files_at(Save.data["hlm2_mods_dir"]):
 		if Manager.global_patchwads.has(file): continue
 		DirAccess.remove_absolute(Save.data["hlm2_mods_dir"] + file)

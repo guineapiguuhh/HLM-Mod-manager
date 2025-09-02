@@ -18,6 +18,7 @@ offset_bottom = 31.0
 text = "Folder name:"
 
 [node name="LineEdit" type="LineEdit" parent="FolderName"]
+layout_mode = 0
 offset_top = 24.0
 offset_right = 285.0
 offset_bottom = 55.0
@@ -30,6 +31,7 @@ offset_bottom = 94.0
 text = "Display name"
 
 [node name="LineEdit" type="LineEdit" parent="DisplayName"]
+layout_mode = 0
 offset_top = 24.0
 offset_right = 285.0
 offset_bottom = 55.0
@@ -42,6 +44,7 @@ offset_bottom = 157.0
 text = "Description"
 
 [node name="TextEdit" type="TextEdit" parent="Description"]
+layout_mode = 0
 offset_top = 24.0
 offset_right = 285.0
 offset_bottom = 153.0
