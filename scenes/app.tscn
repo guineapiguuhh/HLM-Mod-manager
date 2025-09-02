@@ -20,11 +20,11 @@ offset_bottom = 648.0
 split_offset = 325
 script = ExtResource("2_k6d74")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer"]
+[node name="ModsScroll" type="ScrollContainer" parent="HSplitContainer"]
 layout_mode = 2
 horizontal_scroll_mode = 0
 
-[node name="Mods" type="Tree" parent="HSplitContainer/ScrollContainer"]
+[node name="Mods" type="Tree" parent="HSplitContainer/ModsScroll"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -106,6 +106,6 @@ offset_right = 155.0
 offset_bottom = 31.0
 text = "Edit"
 
-[connection signal="item_selected" from="HSplitContainer/ScrollContainer/Mods" to="." method="_on_mods_item_selected"]
+[connection signal="item_selected" from="HSplitContainer/ModsScroll/Mods" to="." method="_on_mods_item_selected"]
 [connection signal="pressed" from="HSplitContainer/ModInfo/Buttons/Apply" to="HSplitContainer/ModInfo" method="_on_apply_pressed"]
 [connection signal="pressed" from="HSplitContainer/ModInfo/Buttons/Remove" to="HSplitContainer/ModInfo" method="_on_remove_pressed"]

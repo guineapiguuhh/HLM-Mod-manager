@@ -1,7 +1,5 @@
 extends Node
 
-# ! Only support Windows
-
 const PATCHWAD_EXT := ".patchwad"
 const WAD_EXT := ".wad"
 

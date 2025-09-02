@@ -31,13 +31,6 @@ func _ready() -> void:
 	}, $File)
 
 	# Edit
-	add_item({  
-		"name": "Change Mod Settings"
-	}, $Edit)
-
-	add_item({  
-		"separator": true
-	}, $Edit)
 
 	add_item({  
 		"name": "Change HLM2 Path",
@@ -85,7 +78,6 @@ func _delete_mod() -> void:
 	Scene.add(window)
 
 func _reload_list() -> void:
-	Manager.reload()
 	Scene.current.reload_mods_tree()
 
 func _change_hlm2_path() -> void:
@@ -93,7 +85,7 @@ func _change_hlm2_path() -> void:
 		"Open Hotline Miami 2 Directory", 
 		func (_dialogue, dir):
 			Save.data["hlm2_dir"] = dir
-			import_vanilla_music()
+			Installer.import_vanilla_music()
 			Save.save()
 	)
 
@@ -111,18 +103,9 @@ func _change_mods_path() -> void:
 		"Open a Directory", 
 		func (_dialogue, dir):
 			Save.data["mods_dir"] = dir
-			import_vanilla_music()
+			Installer.import_vanilla_music()
 
 			Scene.current.reload_mods_tree()
 
 			Save.save()
 	)
-
-func import_vanilla_music() -> void:
-	var path = Save.data["hlm2_dir"] + "/" + Path.wad("hlm2_music_desktop")
-	if FileAccess.file_exists(path) && Save.data["mods_dir"]:
-		var music_bytes = FileAccess.get_file_as_bytes(path)
-
-		var to_path = Save.data["mods_dir"] + Path.wad("vanilla_music")
-		var vanilla_music := FileAccess.open(to_path, FileAccess.WRITE)
-		vanilla_music.store_buffer(music_bytes)
