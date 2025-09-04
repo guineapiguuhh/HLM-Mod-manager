@@ -8,6 +8,7 @@ func install(config: Dictionary) -> void:
 	replace_music(music_bytes)
 
 func uninstall(config: Dictionary) -> void:
+	remove_patchwads()
 	remove_patchwads(config["folder_name"])
 
 	var music_path = Save.data["mods_dir"].path_join(Path.wad("vanilla_music"))
