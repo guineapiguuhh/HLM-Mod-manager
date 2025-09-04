@@ -102,7 +102,16 @@ func _reload_list() -> void:
 	Scene.current.get_node("Split/Mods").reload()
 
 func _reset_save() -> void:
-	Save.reset(true)
+	var window := YouAreSureDialog.new()
+	window.dialog_text = "Are you sure you want reset your Save"
+	window.dialog_autowrap = true
+	window.confirmed.connect(
+		func ():
+			Save.reset(true)
+	)
+	window.initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN
+	Scene.add(window)
+	window.show()
 
 func _change_hlm2_path() -> void:
 	NativeDialogs.open_dir_dialog(

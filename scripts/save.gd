@@ -28,5 +28,21 @@ func save() -> void:
 	var file := FileAccess.open(file_path, FileAccess.WRITE_READ)
 	file.store_string(new_data)
 
-func defined_dirs() -> bool:
-	return data["hlm2_mods_dir"] && data["mods_dir"] && data["hlm2_dir"]
+func is_defined_dirs() -> bool:
+	return (data["hlm2_mods_dir"] 
+		&& data["hlm2_dir"]
+		&& data["mods_dir"]) 
+
+func error_defined_dirs() -> void:
+	var texts = []
+
+	# TODO: Make this more smart??
+	if !data["hlm2_mods_dir"]: texts.append("Edit > Change HLM2 Mods Path")
+	if !data["hlm2_dir"]: texts.append("Edit > Change HLM2 Path")
+	if !data["mods_dir"]: texts.append("Edit > Change Mods Path")
+
+	NativeDialogs.open_accept_dialog(
+		"Error",
+		NativeAcceptDialog.Icon.ICON_ERROR,
+		"Please define the paths.\n" + "\n".join(texts)
+	)

@@ -105,3 +105,5 @@ offset_bottom = 31.0
 text = "Edit"
 
 [connection signal="mod_selected" from="Split/Mods" to="Split/Panel" method="_on_mods_mod_selected"]
+[connection signal="pressed" from="Split/Panel/Buttons/Apply" to="Split/Panel" method="_on_apply_pressed"]
+[connection signal="pressed" from="Split/Panel/Buttons/Remove" to="Split/Panel" method="_on_remove_pressed"]

@@ -8,15 +8,15 @@ func _ready() -> void:
 	resized.connect(func(): queue_sort())
 
 func _on_apply_pressed() -> void:
-	if !Save.defined_dirs():
-		open_error_dir_dialog()
+	if !Save.is_defined_dirs():
+		Save.error_defined_dirs()
 		return
 
 	Installer.install(mod)
 
 func _on_remove_pressed() -> void:
-	if !Save.defined_dirs():
-		open_error_dir_dialog()
+	if !Save.is_defined_dirs():
+		Save.error_defined_dirs()
 		return
 
 	Installer.uninstall(mod)
@@ -64,13 +64,6 @@ func set_mod(config: Dictionary) -> void:
 		$Cover.texture = ImageTexture.create_from_image(image)
 
 	queue_sort()
-
-func open_error_dir_dialog():
-	NativeDialogs.open_accept_dialog(
-		"Error",
-		NativeAcceptDialog.Icon.ICON_ERROR,
-		"Please define the paths." # \nEdit > Change HLM Path\nEdit > Change HLM Mods Path\nEdit > Change Mods Path"
-	)
 
 func _on_mods_mod_selected(data:Dictionary) -> void:
 	set_mod(data)
