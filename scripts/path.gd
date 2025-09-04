@@ -23,7 +23,7 @@ func remove_dir(path: String) -> int:
 	return OK
 
 func mod(mod_name: String) -> String:
-	return Save.data["mods_dir"] + "/" + mod_name
+	return Save.data["mods_dir"].path_join(mod_name)
 
 func png(path: String) -> String:
 	return path + ".png"

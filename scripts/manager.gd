@@ -16,7 +16,7 @@ func reload() -> void:
 	if !Save.data["mods_dir"]: return
 
 	for dir_name in DirAccess.get_directories_at(Save.data["mods_dir"]):
-		var data_path := Path.mod(dir_name) + "/" + Path.json("settings")
+		var data_path := Path.mod(dir_name).path_join(Path.json("settings"))
 		if !FileAccess.file_exists(data_path): continue
 
 		var base_data:FileAccess = FileAccess.open(data_path, FileAccess.READ)
@@ -41,23 +41,23 @@ func create(
 ) -> void:
 	config.merge(mod_structure)
 
-	var path := Path.mod(config["folder_name"]) + "/"
+	var path := Path.mod(config["folder_name"])
 	DirAccess.make_dir_absolute(path)
-	DirAccess.make_dir_absolute(path + "mods/")
+	DirAccess.make_dir_absolute(path.path_join("mods"))
 
-	var config_file := FileAccess.open(path + Path.json("settings"), FileAccess.WRITE)
+	var config_file := FileAccess.open(path.path_join(Path.json("settings")), FileAccess.WRITE)
 	config_file.store_string(JSON.stringify(config))
 
 	if !image.is_empty():
-		var image_file := FileAccess.open(path + Path.png("cover"), FileAccess.WRITE)
+		var image_file := FileAccess.open(path.path_join(Path.png("cover")), FileAccess.WRITE)
 		image_file.store_buffer(image)
 		
 	if !music_bytes.is_empty():
-		var music_file := FileAccess.open(path + Path.wad("music"), FileAccess.WRITE)
+		var music_file := FileAccess.open(path.path_join(Path.wad("music")), FileAccess.WRITE)
 		music_file.store_buffer(music_bytes)
 
 	for patchwad: Array in patchwads:
-		var patchwad_file := FileAccess.open(path + "mods/" + patchwad.front(), FileAccess.WRITE)
+		var patchwad_file := FileAccess.open(path.path_join("mods").path_join(patchwad.front()), FileAccess.WRITE)
 		patchwad_file.store_buffer(patchwad.back())
 	
 
@@ -65,7 +65,7 @@ func delete(mod_name: String) -> void:
 	Path.remove_dir(Path.mod(mod_name))
 
 func get_patchwads(mod_name: String) -> PackedStringArray:
-	var path := Path.mod(mod_name) + "/mods/"
+	var path := Path.mod(mod_name).path_join("mods")
 	if !DirAccess.dir_exists_absolute(path):
 		return []
 	return DirAccess.get_files_at(path)
