@@ -17,7 +17,6 @@ func reload() -> void:
 
 	for dir_name in DirAccess.get_directories_at(Save.data["mods_dir"]):
 		var data_path := Path.mod(dir_name) + "/" + Path.json("settings")
-		print(dir_name)
 		if !FileAccess.file_exists(data_path): continue
 
 		var base_data:FileAccess = FileAccess.open(data_path, FileAccess.READ)

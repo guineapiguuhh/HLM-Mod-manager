@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://dqlthqy30gb5l"]
+[gd_scene load_steps=9 format=3 uid="uid://dqlthqy30gb5l"]
 
 [ext_resource type="Script" uid="uid://bnvn437x18vg7" path="res://scripts/scenes/app.gd" id="1_awiwq"]
 [ext_resource type="Script" uid="uid://ca2r0vf2xtwbl" path="res://scripts/ui/resize_container.gd" id="2_k6d74"]
-[ext_resource type="Script" uid="uid://xakxyv1r778s" path="res://scripts/ui/mod_container.gd" id="3_ljqyw"]
+[ext_resource type="Script" uid="uid://ctiukkbhttmxj" path="res://scripts/ui/mods_tree.gd" id="3_k6d74"]
 [ext_resource type="Texture2D" uid="uid://b0tydc5ahf1hv" path="res://icon.png" id="4_awiwq"]
+[ext_resource type="Script" uid="uid://bmxq682t6em4h" path="res://scripts/ui/mod_panel.gd" id="4_k6d74"]
 [ext_resource type="Script" uid="uid://dpd2swr8axe5n" path="res://scripts/ui/menu_bar.gd" id="5_6qkjt"]
+[ext_resource type="Texture2D" uid="uid://clhlrkvtfvu4v" path="res://images/install.png" id="6_jv7dx"]
+[ext_resource type="Texture2D" uid="uid://cxny2fqapa7p8" path="res://images/x.png" id="7_6qkjt"]
 
 [node name="App" type="Control"]
 layout_mode = 3
@@ -12,41 +15,33 @@ anchors_preset = 0
 script = ExtResource("1_awiwq")
 metadata/_edit_lock_ = true
 
-[node name="HSplitContainer" type="HSplitContainer" parent="."]
+[node name="Split" type="HSplitContainer" parent="."]
 layout_mode = 2
 offset_top = 31.0
 offset_right = 1152.0
 offset_bottom = 648.0
-split_offset = 325
+split_offset = 400
 script = ExtResource("2_k6d74")
 
-[node name="ModsScroll" type="ScrollContainer" parent="HSplitContainer"]
+[node name="Mods" type="Tree" parent="Split"]
 layout_mode = 2
-horizontal_scroll_mode = 0
-
-[node name="Mods" type="Tree" parent="HSplitContainer/ModsScroll"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 hide_root = true
+script = ExtResource("3_k6d74")
+metadata/_custom_type_script = "uid://ctiukkbhttmxj"
 
-[node name="ModInfo" type="PanelContainer" parent="HSplitContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(500, 500)
+[node name="Panel" type="PanelContainer" parent="Split"]
 layout_mode = 2
-mouse_filter = 2
-script = ExtResource("3_ljqyw")
-metadata/_custom_type_script = "uid://xakxyv1r778s"
+script = ExtResource("4_k6d74")
+metadata/_custom_type_script = "uid://bmxq682t6em4h"
 
-[node name="Cover" type="TextureRect" parent="HSplitContainer/ModInfo"]
+[node name="Cover" type="TextureRect" parent="Split/Panel"]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 texture = ExtResource("4_awiwq")
 
-[node name="Name" type="Label" parent="HSplitContainer/ModInfo"]
+[node name="Name" type="Label" parent="Split/Panel"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -56,7 +51,7 @@ theme_override_font_sizes/font_size = 32
 text = "Invalid mod"
 horizontal_alignment = 1
 
-[node name="Description" type="Label" parent="HSplitContainer/ModInfo"]
+[node name="Description" type="Label" parent="Split/Panel"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -66,25 +61,28 @@ text = "Invalid description"
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Buttons" type="HBoxContainer" parent="HSplitContainer/ModInfo"]
+[node name="Buttons" type="HBoxContainer" parent="Split/Panel"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_constants/separation = 20
 
-[node name="Apply" type="Button" parent="HSplitContainer/ModInfo/Buttons"]
-custom_minimum_size = Vector2(100, 50)
+[node name="Apply" type="Button" parent="Split/Panel/Buttons"]
+custom_minimum_size = Vector2(125, 50)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "Apply "
+icon = ExtResource("6_jv7dx")
 
-[node name="Remove" type="Button" parent="HSplitContainer/ModInfo/Buttons"]
-custom_minimum_size = Vector2(100, 50)
+[node name="Remove" type="Button" parent="Split/Panel/Buttons"]
+custom_minimum_size = Vector2(125, 50)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "Remove"
+icon = ExtResource("7_6qkjt")
+icon_alignment = 2
 
 [node name="MenuBar" type="MenuBar" parent="."]
 layout_mode = 0
@@ -106,6 +104,4 @@ offset_right = 155.0
 offset_bottom = 31.0
 text = "Edit"
 
-[connection signal="item_selected" from="HSplitContainer/ModsScroll/Mods" to="." method="_on_mods_item_selected"]
-[connection signal="pressed" from="HSplitContainer/ModInfo/Buttons/Apply" to="HSplitContainer/ModInfo" method="_on_apply_pressed"]
-[connection signal="pressed" from="HSplitContainer/ModInfo/Buttons/Remove" to="HSplitContainer/ModInfo" method="_on_remove_pressed"]
+[connection signal="mod_selected" from="Split/Mods" to="Split/Panel" method="_on_mods_mod_selected"]

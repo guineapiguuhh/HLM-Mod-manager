@@ -1,4 +1,4 @@
-extends Window
+extends TempWindow
 
 func _on_save_pressed() -> void:
 	var config := {
@@ -23,9 +23,6 @@ func _on_save_pressed() -> void:
 		$PatchWads/Upload.content
 	)
 
-	Scene.current.reload_mods_tree()
+	Scene.current.get_node("Split/Mods").reload()
 	
-	_on_close_requested()
-
-func _on_close_requested() -> void: 
-	queue_free()
+	close_requested.emit()

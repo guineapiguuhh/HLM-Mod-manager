@@ -1,11 +1,11 @@
-class_name ModContainer extends PanelContainer
+class_name ModPanel extends PanelContainer
 
 const ERROR_TEXTURE = preload("res://icon.png")
 var mod: Dictionary
 
 func _ready() -> void:
-	resized.connect(func(): queue_sort())
 	queue_sort()
+	resized.connect(func(): queue_sort())
 
 func _on_apply_pressed() -> void:
 	if !Save.defined_dirs():
@@ -32,10 +32,13 @@ func _notification(what: int) -> void:
 		$Buttons.position.y = $Description.position.y
 		$Buttons.position.y += $Description.size.y + 80
 
+		var children_rect := get_children_rect()
 		for child: Control in get_children():
-			var rect := get_children_rect()
 			child.position.x += (size.x - child.size.x * child.scale.x) / 2
-			child.position.y += (size.y - rect.size.y) / 2
+			child.position.y += (size.y - children_rect.size.y) / 2
+		
+		$Cover.position.y = max($Cover.position.y, 0)
+		$Buttons.position.y = min($Buttons.position.y, size.y - $Buttons.size.y * 1.65)
 
 func get_children_rect() -> Rect2:
 	var first_child = get_child(0)
@@ -66,5 +69,8 @@ func open_error_dir_dialog():
 	NativeDialogs.open_accept_dialog(
 		"Error",
 		NativeAcceptDialog.Icon.ICON_ERROR,
-		"Please define the paths.\nEdit > Change HLM Path\nEdit > Change HLM Mods Path\nEdit > Change Mods Path"
+		"Please define the paths." # \nEdit > Change HLM Path\nEdit > Change HLM Mods Path\nEdit > Change Mods Path"
 	)
+
+func _on_mods_mod_selected(data:Dictionary) -> void:
+	set_mod(data)

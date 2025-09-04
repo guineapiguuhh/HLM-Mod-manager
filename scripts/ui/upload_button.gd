@@ -7,7 +7,7 @@ var CHECKMARK_TEXTURE = preload("res://images/checkmark.png")
 var UPLOAD_TEXTURE = preload("res://images/upload.png")
 
 @export var filters: PackedStringArray
-@export var file_mode: NativeFileDialog.FileMode
+@export_enum("File Mode Open File", "File Mode Open Files") var file_mode: int
 
 @export var dialog_title: String
 

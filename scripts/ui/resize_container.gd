@@ -1,4 +1,4 @@
-extends HSplitContainer
+extends Container
 
 func _ready() -> void:
 	_size_changed()

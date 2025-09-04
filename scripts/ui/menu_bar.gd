@@ -1,13 +1,14 @@
 extends MenuBar
 
 const CREATE_MOD_WINDOW := preload("res://scenes/create_mod.tscn")
-const DELETE_MOD_WINDOW := preload("res://scenes/delete_mod.tscn")
 
 var item_structure: Dictionary = {
 	"separator": false,
 	"name": "",
 	"func": null
 }
+
+@onready var mods: ModsTree = Scene.current.get_node("Split/Mods")
 
 func _ready() -> void:
 	# File
@@ -31,6 +32,15 @@ func _ready() -> void:
 	}, $File)
 
 	# Edit
+
+	add_item({  
+		"name": "Reset Save",
+		"func": _reset_save
+	}, $Edit)
+
+	add_item({  
+		"separator": true
+	}, $Edit)
 
 	add_item({  
 		"name": "Change HLM2 Path",
@@ -74,11 +84,25 @@ func _create_mod() -> void:
 	Scene.add(window)
 
 func _delete_mod() -> void:
-	var window := DELETE_MOD_WINDOW.instantiate()
+	var data = mods.get_data(mods.get_selected())
+	var window := YouAreSureDialog.new()
+	window.dialog_text = "Are you sure you want to delete "
+	window.dialog_text += "%s (%s)?" % [data["display_name"], data["folder_name"]]
+	window.dialog_autowrap = true
+	window.confirmed.connect(
+		func ():
+			Manager.delete(data["folder_name"])
+			mods.reload()
+	)
+	window.initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN
 	Scene.add(window)
+	window.show()
 
 func _reload_list() -> void:
-	Scene.current.reload_mods_tree()
+	Scene.current.get_node("Split/Mods").reload()
+
+func _reset_save() -> void:
+	Save.reset(true)
 
 func _change_hlm2_path() -> void:
 	NativeDialogs.open_dir_dialog(
@@ -105,7 +129,7 @@ func _change_mods_path() -> void:
 			Save.data["mods_dir"] = dir
 			Installer.import_vanilla_music()
 
-			Scene.current.reload_mods_tree()
+			Scene.current.get_node("Split/Mods").reload()
 
 			Save.save()
 	)

@@ -1,16 +1,14 @@
 extends Node
 
 func install(config: Dictionary) -> void:
-	remove_all_patchwads()
-	add_patchwads(config)
+	add_patchwads(config["folder_name"])
 
 	var music_path = Path.mod(config["folder_name"]) + "/" + Path.wad("music")
 	var music_bytes = FileAccess.get_file_as_bytes(music_path)
 	replace_music(music_bytes)
 
 func uninstall(config: Dictionary) -> void:
-	remove_all_patchwads()
-	remove_patchwads(config)
+	remove_patchwads(config["folder_name"])
 
 	var music_path = Save.data["mods_dir"] + "/" + Path.wad("vanilla_music")
 	var music_bytes = FileAccess.get_file_as_bytes(music_path)
@@ -30,18 +28,21 @@ func import_vanilla_music() -> void:
 		var vanilla_music := FileAccess.open(to_path, FileAccess.WRITE)
 		vanilla_music.store_buffer(music_bytes)
 
-func add_patchwads(data: Dictionary) -> void:
-	for patch in Manager.get_patchwads(data["folder_name"]):
-		var patch_bytes = FileAccess.get_file_as_bytes(Path.mod(data["folder_name"]) + "/mods/" + patch)
+func add_patchwads(folder_name: String) -> void:
+	for patch in Manager.get_patchwads(folder_name):
+		var patch_bytes = FileAccess.get_file_as_bytes(Path.mod(folder_name) + "/mods/" + patch)
 
 		var patchwad := FileAccess.open(Save.data["hlm2_mods_dir"] + patch, FileAccess.WRITE)
 		patchwad.store_buffer(patch_bytes)
 
-func remove_patchwads(data: Dictionary) -> void:
-	for patch in Manager.get_patchwads(data["folder_name"]):
-		DirAccess.remove_absolute(Save.data["hlm2_mods_dir"] + patch)
+func remove_patchwads(folder_name: String = '', force:bool = false) -> void:
+	var vanilla_mods_dir = folder_name.is_empty()
 
-func remove_all_patchwads() -> void:
-	for file in DirAccess.get_files_at(Save.data["hlm2_mods_dir"]):
-		if Manager.global_patchwads.has(file): continue
-		DirAccess.remove_absolute(Save.data["hlm2_mods_dir"] + file)
+	var content := Manager.get_patchwads(folder_name)
+	if vanilla_mods_dir:
+		content = DirAccess.get_files_at(Save.data["hlm2_mods_dir"])
+		
+	for patch in content:
+		if vanilla_mods_dir && Manager.global_patchwads.has(patch) && !force:
+			continue
+		DirAccess.remove_absolute(Save.data["hlm2_mods_dir"] + patch)

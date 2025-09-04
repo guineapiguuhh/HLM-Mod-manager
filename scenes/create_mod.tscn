@@ -9,6 +9,7 @@ initial_position = 2
 size = Vector2i(500, 298)
 unresizable = true
 script = ExtResource("1_j3d0l")
+metadata/_custom_type_script = "uid://ckguqccapepg5"
 
 [node name="FolderName" type="Label" parent="."]
 offset_left = 8.0
@@ -28,7 +29,7 @@ offset_left = 8.0
 offset_top = 71.0
 offset_right = 113.0
 offset_bottom = 94.0
-text = "Display name"
+text = "Display name:"
 
 [node name="LineEdit" type="LineEdit" parent="DisplayName"]
 layout_mode = 0
@@ -41,7 +42,7 @@ offset_left = 8.0
 offset_top = 134.0
 offset_right = 97.0
 offset_bottom = 157.0
-text = "Description"
+text = "Description:"
 
 [node name="TextEdit" type="TextEdit" parent="Description"]
 layout_mode = 0
@@ -54,7 +55,7 @@ offset_left = 315.0
 offset_top = 8.0
 offset_right = 490.0
 offset_bottom = 39.0
-text = "Global Patch Wads"
+text = "Global PatchWads"
 
 [node name="CoverImage" type="Label" parent="."]
 offset_left = 331.0
@@ -79,7 +80,7 @@ offset_left = 331.0
 offset_top = 127.0
 offset_right = 420.0
 offset_bottom = 150.0
-text = "Music Wad:"
+text = "Music:"
 
 [node name="Upload" type="Button" parent="MusicWad"]
 layout_mode = 0
@@ -97,7 +98,7 @@ offset_left = 331.0
 offset_top = 184.0
 offset_right = 430.0
 offset_bottom = 207.0
-text = "Patch Wads: "
+text = "PatchWads: "
 
 [node name="Upload" type="Button" parent="PatchWads"]
 layout_mode = 0
@@ -118,5 +119,4 @@ offset_right = 490.0
 offset_bottom = 286.0
 text = "Save"
 
-[connection signal="close_requested" from="." to="." method="_on_close_requested"]
 [connection signal="pressed" from="Save" to="." method="_on_save_pressed"]
