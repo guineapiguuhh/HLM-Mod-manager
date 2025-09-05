@@ -1,6 +1,9 @@
 extends Node
 
+# TODO: More modular system!
+
 func install(config: Dictionary) -> void:
+	remove_patchwads()
 	add_patchwads(config["folder_name"])
 
 	var music_path = Path.mod(config["folder_name"]).path_join( Path.wad("music"))
